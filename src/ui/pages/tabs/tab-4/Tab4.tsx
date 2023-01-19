@@ -5,7 +5,7 @@ import { IonContent, IonTitle } from '@ionic/react';
 const Tab4: React.FC = () => {
   return (
     <IonContent color={'white-background'}>
-      <IonTitle>Tab4</IonTitle>
+      <IonTitle>Tab4 test</IonTitle>
     </IonContent>
   );
 };
