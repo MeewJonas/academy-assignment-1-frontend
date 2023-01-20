@@ -35,15 +35,9 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      <MainMenu />
+      
       <IonPage id="main-content">
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton auto-hide="false" />
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
+
         <IonContent className="ion-padding">
           <IonReactRouter>
             <IonTabs>

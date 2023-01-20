@@ -19,7 +19,7 @@ const MainMenu = () => {
   };
   return (
     <>
-      <IonMenu contentId="main-content">
+      <IonMenu contentId="message-board-content">
         <IonHeader>
           <IonToolbar>
             <IonTitle>Menu Content</IonTitle>
