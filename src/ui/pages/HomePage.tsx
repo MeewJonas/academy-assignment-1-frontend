@@ -1,20 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router';
 import { IonReactRouter } from '@ionic/react-router';
-import {
-  IonTabBar,
-  IonTabButton,
-  IonIcon,
-  IonTabs,
-  IonRouterOutlet,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonMenuButton,
-  IonPage,
-  IonToolbar,
-  useIonRouter,
-} from '@ionic/react';
+import { IonTabBar, IonTabButton, IonIcon, IonTabs, IonRouterOutlet, IonContent, IonPage, useIonRouter, IonLabel } from '@ionic/react';
 import { personOutline, mailOutline, searchOutline, homeOutline } from 'ionicons/icons';
 
 import DirectMessageTab from './tabs/direct-message-tab/DirectMessageTab';
@@ -31,17 +18,15 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     if (!authUser) router.push('/login');
-  
   }, [router, authUser]);
 
   return (
     <>
       <MainMenu />
       <IonPage id="main-content">
-
         <IonContent className="ion-padding">
           <IonReactRouter>
-            <IonTabs >
+            <IonTabs>
               <IonRouterOutlet>
                 {pages.map((p, i) => {
                   return <Route key={i} exact path={p.path} component={p.component} />;
@@ -57,6 +42,7 @@ const HomePage: React.FC = () => {
                   return (
                     <IonTabButton key={i} tab={`tab${i}`} href={p.path}>
                       <IonIcon icon={p.icon} />
+                      <IonLabel>{p.name}</IonLabel>
                     </IonTabButton>
                   );
                 })}
@@ -101,5 +87,3 @@ const pages = [
     redirect: false,
   },
 ];
-
-

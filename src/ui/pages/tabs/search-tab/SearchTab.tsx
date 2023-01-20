@@ -1,11 +1,18 @@
 import React from 'react';
-import { IonContent, IonSearchbar, IonTitle } from '@ionic/react';
+import { IonContent, IonGrid, IonHeader, IonRow, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
 
 const SearchTab: React.FC = () => (
-  <IonContent color={'white-background'}>
-    <IonTitle>Search</IonTitle>
-    <IonSearchbar placeholder="Søg"></IonSearchbar>
-  </IonContent>
+  <>
+    <IonHeader>
+      <IonToolbar color={'dark'}>
+        <IonSearchbar className="mt-5" placeholder="Søg"></IonSearchbar>
+      </IonToolbar>
+    </IonHeader>
+
+    <IonContent color={'white-background'}>
+      <IonTitle>Search</IonTitle>
+    </IonContent>
+  </>
 );
 
 export default SearchTab;

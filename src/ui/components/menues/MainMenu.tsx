@@ -43,7 +43,7 @@ const MainMenu = () => {
           </IonList>
         </IonContent>
       </IonMenu>
-      {/*TODO START: Move it to its own class*/}
+      
       <IonModal isOpen={isOpen}>
         <IonHeader>
           <IonToolbar>
@@ -60,7 +60,7 @@ const MainMenu = () => {
           </p>
         </IonContent>
       </IonModal>
-      {/*TODO SLUT: Move it to its own class*/}
+      
     </>
   );
 };

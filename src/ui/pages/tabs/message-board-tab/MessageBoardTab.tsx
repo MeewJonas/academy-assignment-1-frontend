@@ -11,27 +11,29 @@ import {
   IonHeader,
   IonInput,
   IonItem,
-  IonLabel,
   IonMenuButton,
+  IonTextarea,
+  IonTitle,
   IonToolbar,
 } from '@ionic/react';
 
 const MessageBoardTab: React.FC = () => (
   <>
-    <IonHeader >
-      <IonToolbar color={'dark'} >
-        <IonButtons slot="start" className='p-5'>
+    <IonHeader>
+      <IonToolbar color={'dark'}>
+        <IonButtons slot="start" className="p-5">
           <IonMenuButton auto-hide="false" />
         </IonButtons>
+        <IonTitle>Forum</IonTitle>
       </IonToolbar>
-      <IonItem className='border-solid border-4' >
-        <IonInput slot='start' type="text" placeholder=""></IonInput>
-        <IonButton  slot="end" size="default">
+      <IonItem className="border-solid border-4">
+        <IonTextarea placeholder="Skriv nyt opslag"></IonTextarea>
+        <IonButton slot="end" size="default">
           Send
         </IonButton>
       </IonItem>
     </IonHeader>
-    <IonContent id="message-board-content" className="" color={'white-background'}>
+    <IonContent id="message-board-content" color={'white-background'}>
       <IonCard>
         <IonCardHeader>
           <IonCardTitle>John Johnson</IonCardTitle>
@@ -61,7 +63,7 @@ const MessageBoardTab: React.FC = () => (
         <IonButton fill="clear">Action 1</IonButton>
         <IonButton fill="clear">Action 2</IonButton>
       </IonCard>
-      <IonCard>
+      <IonCard className="mb-40">
         <IonCardHeader>
           <IonCardTitle>John Johnson</IonCardTitle>
           <IonCardSubtitle>Yesterday</IonCardSubtitle>

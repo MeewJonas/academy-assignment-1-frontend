@@ -1,5 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { IonButton, IonCol, IonContent, IonGrid, IonInput, IonItem, IonLabel, IonRow, IonText, IonTitle } from '@ionic/react';
+import {
+  IonButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonMenuButton,
+  IonRow,
+  IonSearchbar,
+  IonText,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 import { useAuthUserStore } from 'store/user';
 import { supabase } from 'apis/supabaseClient';
 
@@ -25,39 +41,47 @@ const UserTab: React.FC = () => {
   }, []);
 
   return (
-    <IonContent color={'white-background'}>
-      <IonGrid>
-        <IonRow>
-          <IonItem color={'white-background'}>
-            <IonLabel position="floating">First Name</IonLabel>
-            <IonInput type="text" value={profileData?.first_name} />
-          </IonItem>
-        </IonRow>
-        <IonRow>
-          <IonItem color={'white-background'}>
-            <IonLabel position="floating">Last Name</IonLabel>
-            <IonInput type="text" value={profileData?.last_name} />
-          </IonItem>
-        </IonRow>
-        <IonRow>
-          <IonItem color={'white-background'}>
-            <IonLabel position="floating">Email</IonLabel>
-            <IonInput type="text" value={authUser?.email} />
-          </IonItem>
-        </IonRow>
-        <IonRow>
-          <IonItem color={'white-background'}>
-            <IonLabel position="floating">Age</IonLabel>
-            <IonInput type="number" min={18} max={120} value={profileData?.age} />
-          </IonItem>
-        </IonRow>
-        <IonRow>
-          <IonCol>
-            <IonButton>Gem</IonButton>
-          </IonCol>
-        </IonRow>
-      </IonGrid>
-    </IonContent>
+    <>
+      <IonToolbar color={'dark'}>
+        <IonButtons slot="start" className="p-5">
+          <IonMenuButton auto-hide="false" />
+        </IonButtons>
+        <IonTitle>Profil</IonTitle>
+      </IonToolbar>
+      <IonContent color={'white-background'}>
+        <IonGrid>
+          <IonRow>
+            <IonItem color={'white-background'}>
+              <IonLabel position="floating">First Name</IonLabel>
+              <IonInput type="text" value={profileData?.first_name} />
+            </IonItem>
+          </IonRow>
+          <IonRow>
+            <IonItem color={'white-background'}>
+              <IonLabel position="floating">Last Name</IonLabel>
+              <IonInput type="text" value={profileData?.last_name} />
+            </IonItem>
+          </IonRow>
+          <IonRow>
+            <IonItem color={'white-background'}>
+              <IonLabel position="floating">Email</IonLabel>
+              <IonInput type="text" value={authUser?.email} />
+            </IonItem>
+          </IonRow>
+          <IonRow>
+            <IonItem color={'white-background'}>
+              <IonLabel position="floating">Age</IonLabel>
+              <IonInput type="number" min={18} max={120} value={profileData?.age} />
+            </IonItem>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <IonButton>Gem</IonButton>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+      </IonContent>
+    </>
   );
 };
 
