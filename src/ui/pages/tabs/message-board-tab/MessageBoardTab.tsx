@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  IonAvatar,
   IonButton,
   IonButtons,
   IonCard,
@@ -9,36 +8,30 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonContent,
-  IonFooter,
   IonHeader,
   IonInput,
   IonItem,
   IonLabel,
   IonMenuButton,
-  IonPage,
-  IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import MainMenu from 'ui/components/menues/MainMenu';
 
 const MessageBoardTab: React.FC = () => (
   <>
-  <MainMenu />
-    <IonHeader>
-      <IonToolbar>
-        <IonButtons slot="start">
+    <IonHeader >
+      <IonToolbar color={'dark'} >
+        <IonButtons slot="start" className='p-5'>
           <IonMenuButton auto-hide="false" />
         </IonButtons>
       </IonToolbar>
-    </IonHeader>
-    <IonContent id='message-board-content' className="ion-padding" color={'white-background'}>
-      <IonItem>
-        <IonLabel position="floating"></IonLabel>
-        <IonInput type="text" placeholder=""></IonInput>
-        <IonButton slot="end" size="default">
+      <IonItem className='border-solid border-4' >
+        <IonInput slot='start' type="text" placeholder=""></IonInput>
+        <IonButton  slot="end" size="default">
           Send
         </IonButton>
       </IonItem>
+    </IonHeader>
+    <IonContent id="message-board-content" className="" color={'white-background'}>
       <IonCard>
         <IonCardHeader>
           <IonCardTitle>John Johnson</IonCardTitle>

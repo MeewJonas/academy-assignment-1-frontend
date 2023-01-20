@@ -31,16 +31,17 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     if (!authUser) router.push('/login');
+  
   }, [router, authUser]);
 
   return (
     <>
-      
+      <MainMenu />
       <IonPage id="main-content">
 
         <IonContent className="ion-padding">
           <IonReactRouter>
-            <IonTabs>
+            <IonTabs >
               <IonRouterOutlet>
                 {pages.map((p, i) => {
                   return <Route key={i} exact path={p.path} component={p.component} />;
@@ -51,7 +52,7 @@ const HomePage: React.FC = () => {
                 </Route>
               </IonRouterOutlet>
 
-              <IonTabBar slot="bottom" color={'white-background'} class={'h-[70px] border-t-[1px] border'}>
+              <IonTabBar slot="bottom" color={'dark'} class={'h-[70px] border-t-[1px] border'}>
                 {pages.map((p, i) => {
                   return (
                     <IonTabButton key={i} tab={`tab${i}`} href={p.path}>
