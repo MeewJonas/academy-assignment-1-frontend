@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { IonButtons, IonButton, IonModal, IonHeader, IonContent, IonToolbar, IonTitle, IonPage } from '@ionic/react';
 
-function TestModular() {
+
+
+function TestModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Inline Modal</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+
       <IonContent className="ion-padding">
+        
         <IonButton expand="block" onClick={() => setIsOpen(true)}>
           Open
         </IonButton>
+
+
         <IonModal isOpen={isOpen}>
           <IonHeader>
             <IonToolbar>
@@ -37,4 +38,4 @@ function TestModular() {
   );
 }
 
-export default TestModular;
+export default TestModal;
