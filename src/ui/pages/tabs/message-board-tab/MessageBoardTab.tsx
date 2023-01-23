@@ -1,82 +1,40 @@
 import React from 'react';
 import {
   IonButton,
-  IonButtons,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonContent,
   IonHeader,
-  IonInput,
   IonItem,
-  IonMenuButton,
   IonTextarea,
-  IonTitle,
-  IonToolbar,
+
 } from '@ionic/react';
+
+import PostCard from 'ui/components/custom/PostCard';
+import MenuToolBar from 'ui/components/custom/MenuToolBar';
 
 const MessageBoardTab: React.FC = () => (
   <>
-    <IonHeader>
-      <IonToolbar color={'dark'}>
-        <IonButtons slot="start" className="p-5">
-          <IonMenuButton auto-hide="false" />
-        </IonButtons>
-        <IonTitle>Forum</IonTitle>
-      </IonToolbar>
-      <IonItem className="border-solid border-4">
-        <IonTextarea placeholder="Skriv nyt opslag"></IonTextarea>
-        <IonButton slot="end" size="default">
-          Send
-        </IonButton>
-      </IonItem>
-    </IonHeader>
+    
+      <MenuToolBar title="Forum" post={true} />
+      
+    
     <IonContent id="message-board-content" color={'white-background'}>
-      <IonCard>
-        <IonCardHeader>
-          <IonCardTitle>John Johnson</IonCardTitle>
-
-          <IonCardSubtitle>Today</IonCardSubtitle>
-        </IonCardHeader>
-
-        <IonCardContent>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos reprehenderit. Veniam, molestias quos, dolorum
-          consequuntur nisi deserunt omnis id illo sit cum qui. Eaque, dicta.
-        </IonCardContent>
-
-        <IonButton fill="clear">Action 1</IonButton>
-        <IonButton fill="clear">Action 2</IonButton>
-      </IonCard>
-      <IonCard>
-        <IonCardHeader>
-          <IonCardTitle>John Johnson</IonCardTitle>
-          <IonCardSubtitle>Today</IonCardSubtitle>
-        </IonCardHeader>
-
-        <IonCardContent>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos reprehenderit. Veniam, molestias quos, dolorum
-          consequuntur nisi deserunt omnis id illo sit cum qui. Eaque, dicta.
-        </IonCardContent>
-
-        <IonButton fill="clear">Action 1</IonButton>
-        <IonButton fill="clear">Action 2</IonButton>
-      </IonCard>
-      <IonCard className="mb-40">
-        <IonCardHeader>
-          <IonCardTitle>John Johnson</IonCardTitle>
-          <IonCardSubtitle>Yesterday</IonCardSubtitle>
-        </IonCardHeader>
-
-        <IonCardContent>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos reprehenderit. Veniam, molestias quos, dolorum
-          consequuntur nisi deserunt omnis id illo sit cum qui. Eaque, dicta.
-        </IonCardContent>
-
-        <IonButton fill="clear">Action 1</IonButton>
-        <IonButton fill="clear">Action 2</IonButton>
-      </IonCard>
+      <div className="px-5 pb-40">
+        <PostCard
+          name="Michael Jordan"
+          date="Today"
+          message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos veritatis error fugit, reprehenderit tempora sed nisi consequatur laborum asperiores, natus facere quod quas veniam cupiditate non dicta illo, quos quidem?"
+        />
+        <PostCard
+          name="Charles Barkley"
+          date="Today"
+          message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet hic veniam obcaecati libero quod nulla architecto reprehenderit facere officiis tenetur vitae tempora consectetur fugiat atque nam, voluptatum quaerat natus aspernatur. Labore quibusdam sapiente in dolor libero quaerat, sint repudiandae vel!"
+        />
+        <PostCard
+          name="Scottie Pippen"
+          date="Today"
+          message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum delectus tenetur voluptas debitis."
+        />
+      </div>
     </IonContent>
   </>
 );

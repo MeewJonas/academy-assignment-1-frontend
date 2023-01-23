@@ -4,7 +4,6 @@ import { IonButton, useIonRouter, IonButtons, IonContent, IonHeader, IonItem, Io
 import { useAuthUserStore } from 'store/user';
 import { supabase } from 'apis/supabaseClient';
 
-
 const MainMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,8 +20,10 @@ const MainMenu = () => {
     <>
       <IonMenu contentId="message-board-content">
         <IonHeader>
-          <IonToolbar>
-            <IonTitle>Menu Content</IonTitle>
+          <IonToolbar color={'dark'}>
+            <div className="p-9">
+              <IonTitle>Menu Content</IonTitle>
+            </div>
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
@@ -43,7 +44,7 @@ const MainMenu = () => {
           </IonList>
         </IonContent>
       </IonMenu>
-      
+
       <IonModal isOpen={isOpen}>
         <IonHeader>
           <IonToolbar>
@@ -60,18 +61,16 @@ const MainMenu = () => {
           </p>
         </IonContent>
       </IonModal>
-      
     </>
   );
 };
 
 export default MainMenu;
 
-
 const menuItems = [
-    { name: 'Settings', path: '/' },
-    { name: 'Account', path: '/' },
-    { name: 'Questionnaire', path: '/' },
-    { name: 'User', path: '/user' },
-    { name: 'Search', path: '/search' },
-  ];
+  { name: 'Settings', path: '/' },
+  { name: 'Account', path: '/' },
+  { name: 'Questionnaire', path: '/' },
+  { name: 'User', path: '/user' },
+  { name: 'Search', path: '/search' },
+];

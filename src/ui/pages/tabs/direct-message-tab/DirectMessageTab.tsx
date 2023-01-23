@@ -1,16 +1,10 @@
 import React from 'react';
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar } from '@ionic/react';
+import MenuToolBar from 'ui/components/custom/MenuToolBar';
 
 const DirectMessageTab: React.FC = () => (
   <>
-    <IonHeader>
-      <IonToolbar color={'dark'}>
-        <IonButtons slot="start" className="p-5">
-          <IonMenuButton auto-hide="false" />
-        </IonButtons>
-        <IonTitle>Beskeder</IonTitle>
-      </IonToolbar>
-    </IonHeader>
+    <MenuToolBar title="Direct Message" post={false} />
     <IonContent color={'white-background'}></IonContent>
   </>
 );

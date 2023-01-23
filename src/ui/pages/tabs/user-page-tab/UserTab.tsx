@@ -19,6 +19,8 @@ import {
 import { useAuthUserStore } from 'store/user';
 import { supabase } from 'apis/supabaseClient';
 
+import MenuToolBar from 'ui/components/custom/MenuToolBar';
+
 type profileType = {
   id: string;
   first_name: string;
@@ -42,12 +44,7 @@ const UserTab: React.FC = () => {
 
   return (
     <>
-      <IonToolbar color={'dark'}>
-        <IonButtons slot="start" className="p-5">
-          <IonMenuButton auto-hide="false" />
-        </IonButtons>
-        <IonTitle>Profil</IonTitle>
-      </IonToolbar>
+      <MenuToolBar title="User" post={false} />
       <IonContent color={'white-background'}>
         <IonGrid>
           <IonRow>
