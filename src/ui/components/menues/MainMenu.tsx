@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { IonButton, useIonRouter, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonMenu, IonModal, IonTitle, IonToolbar } from '@ionic/react';
 
 import { useAuthUserStore } from 'store/user';
+import { useProfileStore } from 'store/Profile';
 import { supabase } from 'apis/supabaseClient';
 
 const MainMenu = () => {
@@ -10,9 +11,11 @@ const MainMenu = () => {
   const router = useIonRouter();
 
   const resetAuthUser = useAuthUserStore((state) => state.resetAuthUser);
+  const resetProfile = useProfileStore((state) => state.resetUserProfile);
 
   const handleLogOut = async () => {
     resetAuthUser();
+    resetProfile();
     await supabase.auth.signOut();
     router.push('/login');
   };

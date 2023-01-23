@@ -16,6 +16,8 @@ type RegisterFormProps = {
 const RegisterForm: React.FC<RegisterFormProps> = ({ togglePasswordButtonType = 'icon' }) => {
   const router = useIonRouter();
   const history = useHistory();
+
+  // Zustand
   const setAuthUser = useAuthUserStore((state) => state.setAuthUser);
 
   const [email, setEmail] = useState<string>('');
@@ -53,6 +55,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ togglePasswordButtonType = 
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (data.user) {
       setAuthUser(data.user);
+      await supabase.from('profile').insert([{ id: data.user.id, first_name: '', last_name: '', age: 0 }]);
       await dismiss();
       await presentAlert({ header: t('authentication.signUpSuccessful'), buttons: ['OK'] });
       router.push('/intro');
@@ -118,7 +121,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ togglePasswordButtonType = 
           <IonText className="text-primary-brand text-xl font-extrabold">{t('authentication.signUp')}</IonText>
         </div>
         <IonItem lines="none" color={'white-background'} className={`border ${emailValid ? 'border-grey-text' : 'border-red-300'} mt-8`}>
-          <IonInput value={email} placeholder={t('authentication.email')} onIonChange={(e) => setEmail(e.detail.value ?? '')} type="email" required class="h-[59px] items-center" />
+          <IonInput
+            value={email}
+            placeholder={t('authentication.email')}
+            onIonChange={(e) => setEmail(e.detail.value ?? '')}
+            type="email"
+            required
+            class="h-[59px] items-center"
+          />
           <IonIcon icon={at} size="medium" className="text-primary-brand" />
         </IonItem>
 
@@ -134,9 +144,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ togglePasswordButtonType = 
             class="h-[59px] items-center"
           />
           {password !== '' && togglePasswordButton(false)}
-          {password === '' && (
-            <IonIcon icon={lockClosedOutline} size="medium" className="text-primary-brand" />
-          )}
+          {password === '' && <IonIcon icon={lockClosedOutline} size="medium" className="text-primary-brand" />}
         </IonItem>
 
         <IonText className={`text-red-500 ${passwordValid && 'opacity-0'}`}>{t('authentication.passwordMinLength')}</IonText>
@@ -151,9 +159,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ togglePasswordButtonType = 
             class="h-[59px] items-center"
           />
           {repeatedPassword !== '' && togglePasswordButton(true)}
-          {repeatedPassword === '' && (
-            <IonIcon icon={lockClosedOutline} size="medium" className="text-primary-brand" />
-          )}
+          {repeatedPassword === '' && <IonIcon icon={lockClosedOutline} size="medium" className="text-primary-brand" />}
         </IonItem>
 
         <IonText className={`text-red-500 ${repPasswordValid && 'opacity-0'}`}>{t('authentication.passwordMustMatch')}</IonText>

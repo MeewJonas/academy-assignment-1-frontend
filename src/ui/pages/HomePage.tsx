@@ -10,15 +10,36 @@ import SearchTab from './tabs/search-tab/SearchTab';
 import UserTab from './tabs/user-page-tab/UserTab';
 
 import { useAuthUserStore } from 'store/user';
+import { useProfileStore } from 'store/Profile';
+
+import { supabase } from 'apis/supabaseClient';
 import MainMenu from 'ui/components/menues/MainMenu';
 
 const HomePage: React.FC = () => {
   const router = useIonRouter();
   const authUser = useAuthUserStore((state) => state.authUser);
+  const profile = useProfileStore((state) => state.userProfile);
+  const setProfile = useProfileStore((state) => state.setUserProfile);
 
   useEffect(() => {
     if (!authUser) router.push('/login');
   }, [router, authUser]);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data: profile, error } = await supabase.from('profile').select('*').eq('id', authUser?.id).single();
+      if (profile!.first_name === '') {
+        setProfile(profile!);
+        router.push('/onboard');
+      } else {
+        setProfile(profile!);
+        console.log('Setting profile');
+      }
+    };
+    if (!profile) {
+      fetchProfile();
+    }
+  }, []);
 
   return (
     <>
