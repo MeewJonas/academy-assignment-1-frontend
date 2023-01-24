@@ -1,27 +1,28 @@
-import { useState } from 'react';
 import { IonButton, IonCol, IonContent, IonGrid, IonInput, IonItem, IonLabel, IonPage, IonRow, useIonRouter } from '@ionic/react';
 import { useAuthUserStore } from 'store/user';
-import { useProfileStore } from 'store/Profile';
+import { useProfileStore } from 'store/profile';
 
 import { supabase } from 'apis/supabaseClient';
 
 const OnBoardingPage: React.FC = () => {
   const authUser = useAuthUserStore((state) => state.authUser);
-  const setProfile = useProfileStore((state) => state.setUserProfile);
-  const profile = useProfileStore((state) => state.userProfile);
+  const firstName = useProfileStore((state) => state.firstName);
+  const lastName = useProfileStore((state) => state.lastName);
+  const age = useProfileStore((state) => state.age);
+  const setFirstName = useProfileStore((state) => state.setFirstName);
+  const setLastName = useProfileStore((state) => state.setLastName);
+  const setAge = useProfileStore((state) => state.setAge);
 
   const router = useIonRouter();
-
-  const [firstName, setFirstName] = useState(profile?.first_name);
-  const [lastName, setLastName] = useState(profile?.last_name);
-  const [age, setAge] = useState(profile?.age);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-   
-    /*
-    const { data, error } = await supabase.from('profile').update([{ first_name: "firstName", last_name: "lastName", age: 10 }]).eq('id', authUser?.id).select();
+    if (firstName === undefined || firstName === null) return;
+    if (lastName === undefined || lastName === null) return;
+    if (age === undefined || age === null) return;
+    
+    const { data, error } = await supabase.from('profile').update({ first_name: firstName, last_name: lastName, age: age }).eq('id', authUser?.id).select();
     
     if (error) {
       console.log(error);
@@ -30,8 +31,6 @@ const OnBoardingPage: React.FC = () => {
     if (data) {
       router.push('/home');
     }
-    */
-    console.log(firstName, lastName, age);
   };
 
   return (
@@ -41,13 +40,13 @@ const OnBoardingPage: React.FC = () => {
           <IonRow>
             <IonItem color={'white-background'}>
               <IonLabel position="floating">First Name</IonLabel>
-              <IonInput onIonChange={(e: any) => setFirstName(e.detail.value!)} type="text" value={firstName} />
+              <IonInput onIonChange={(e: any) => setFirstName(e.detail.value)} type="text" value={firstName} />
             </IonItem>
           </IonRow>
           <IonRow>
             <IonItem color={'white-background'}>
               <IonLabel position="floating">Last Name</IonLabel>
-              <IonInput onIonChange={(e: any) => setLastName(e.detail.value!)} type="text" value={lastName} />
+              <IonInput onIonChange={(e: any) => setLastName(e.detail.value)} type="text" value={lastName} />
             </IonItem>
           </IonRow>
           <IonRow>
@@ -59,7 +58,7 @@ const OnBoardingPage: React.FC = () => {
           <IonRow>
             <IonItem color={'white-background'}>
               <IonLabel position="floating">Age</IonLabel>
-              <IonInput onIonChange={(e: any) => setAge(e.detail.value!)} type="number" min={18} max={120} value={age} />
+              <IonInput onIonChange={(e: any) => setAge(e.detail.value)} type="number" min={18} max={120} value={age} />
             </IonItem>
           </IonRow>
           <IonRow>

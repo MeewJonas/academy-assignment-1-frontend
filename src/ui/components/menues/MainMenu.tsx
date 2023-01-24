@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IonButton, useIonRouter, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonMenu, IonModal, IonTitle, IonToolbar } from '@ionic/react';
 
 import { useAuthUserStore } from 'store/user';
-import { useProfileStore } from 'store/Profile';
+import { useProfileStore } from 'store/profile';
 import { supabase } from 'apis/supabaseClient';
 
 const MainMenu = () => {

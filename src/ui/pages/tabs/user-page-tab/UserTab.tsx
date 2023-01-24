@@ -1,46 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import {
-  IonButton,
-  IonButtons,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonMenuButton,
-  IonRow,
-  IonSearchbar,
-  IonText,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonGrid, IonInput, IonItem, IonLabel, IonRow, useIonRouter } from '@ionic/react';
 import { useAuthUserStore } from 'store/user';
+import { useProfileStore } from 'store/profile';
 import { supabase } from 'apis/supabaseClient';
 
 import MenuToolBar from 'ui/components/custom/MenuToolBar';
 
-type profileType = {
-  id: string;
-  first_name: string;
-  last_name: string;
-  age: number;
-  subscription_active: boolean;
-};
-
 const UserTab: React.FC = () => {
+  const router = useIonRouter();
   const authUser = useAuthUserStore((state) => state.authUser);
-  const [profileData, setProfileData] = useState<profileType | null>(null);
+  const firstName = useProfileStore((state) => state.firstName);
+  const lastName = useProfileStore((state) => state.lastName);
+  const age = useProfileStore((state) => state.age);
+  const setFirstName = useProfileStore((state) => state.setFirstName);
+  const setLastName = useProfileStore((state) => state.setLastName);
+  const setAge = useProfileStore((state) => state.setAge);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const { data: profile, error } = await supabase.from('profile').select('*').eq('id', authUser?.id).single();
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (firstName === undefined || firstName === null) return;
+    if (lastName === undefined || lastName === null) return;
+    if (age === undefined || age === null) return;
 
-      setProfileData(profile);
-    };
-    fetchProfile();
-  }, []);
+    const { data, error } = await supabase.from('profile').update({ first_name: firstName, last_name: lastName, age: age }).eq('id', authUser?.id).select();
+
+    if (error) {
+      console.log(error);
+    }
+
+    if (data) {
+      router.push('/home');
+    }
+  };
 
   return (
     <>
@@ -50,30 +40,30 @@ const UserTab: React.FC = () => {
           <IonRow>
             <IonItem color={'white-background'}>
               <IonLabel position="floating">First Name</IonLabel>
-              <IonInput type="text" value={profileData?.first_name} />
+              <IonInput type="text" value={firstName} onIonChange={(e: any) => setFirstName(e.detail.value)} />
             </IonItem>
           </IonRow>
           <IonRow>
             <IonItem color={'white-background'}>
               <IonLabel position="floating">Last Name</IonLabel>
-              <IonInput type="text" value={profileData?.last_name} />
+              <IonInput type="text" value={lastName} onIonChange={(e: any) => setLastName(e.detail.value)} />
             </IonItem>
           </IonRow>
           <IonRow>
             <IonItem color={'white-background'}>
               <IonLabel position="floating">Email</IonLabel>
-              <IonInput type="text" value={authUser?.email} />
+              <IonInput readonly={true} type="text" value={authUser?.email} />
             </IonItem>
           </IonRow>
           <IonRow>
             <IonItem color={'white-background'}>
               <IonLabel position="floating">Age</IonLabel>
-              <IonInput type="number" min={18} max={120} value={profileData?.age} />
+              <IonInput type="number" min={18} max={120} value={age} onIonChange={(e: any) => setAge(e.detail.value)} />
             </IonItem>
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonButton>Gem</IonButton>
+              <IonButton onClick={handleSubmit}>Gem</IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>

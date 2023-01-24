@@ -10,7 +10,7 @@ import SearchTab from './tabs/search-tab/SearchTab';
 import UserTab from './tabs/user-page-tab/UserTab';
 
 import { useAuthUserStore } from 'store/user';
-import { useProfileStore } from 'store/Profile';
+import { useProfileStore } from 'store/profile';
 
 import { supabase } from 'apis/supabaseClient';
 import MainMenu from 'ui/components/menues/MainMenu';
@@ -18,7 +18,7 @@ import MainMenu from 'ui/components/menues/MainMenu';
 const HomePage: React.FC = () => {
   const router = useIonRouter();
   const authUser = useAuthUserStore((state) => state.authUser);
-  const profile = useProfileStore((state) => state.userProfile);
+  const userProfile = useProfileStore((state) => state.firstName);
   const setProfile = useProfileStore((state) => state.setUserProfile);
 
   useEffect(() => {
@@ -27,16 +27,15 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const { data: profile, error } = await supabase.from('profile').select('*').eq('id', authUser?.id).single();
-      if (profile!.first_name === '') {
-        setProfile(profile!);
+      const { data: profile } = await supabase.from('profile').select('*').eq('id', authUser?.id).single();
+      if (profile?.first_name === '') {
+        setProfile(profile?.first_name, profile?.last_name, profile?.age);
         router.push('/onboard');
       } else {
-        setProfile(profile!);
-        console.log('Setting profile');
+        setProfile(profile!.first_name, profile!.last_name, profile!.age);
       }
     };
-    if (!profile) {
+    if (!userProfile) {
       fetchProfile();
     }
   }, []);
