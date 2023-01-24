@@ -4,7 +4,7 @@ import MenuToolBar from 'ui/components/custom/MenuToolBar';
 
 const DirectMessageTab: React.FC = () => (
   <>
-    <MenuToolBar title="Direct Message" post={false} />
+    <MenuToolBar title="Direct Message"  />
     <IonContent color={'white-background'}></IonContent>
   </>
 );

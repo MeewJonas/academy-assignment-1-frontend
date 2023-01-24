@@ -1,7 +1,8 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon } from '@ionic/react';
 import { useState } from 'react';
 import { heartOutline, handRightOutline, chatboxEllipsesOutline } from 'ionicons/icons';
-import { heart, handRight, chatboxEllipses } from 'ionicons/icons';
+import { heart, handRight } from 'ionicons/icons';
+
 
 type PostCardProps = {
   name: string;
@@ -10,12 +11,14 @@ type PostCardProps = {
 };
 
 const PostCard: React.FC<PostCardProps> = ({
-  name = 'Blank',
-  date = 'today',
-  message = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos reprehenderit. Veniam, molestias quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui. Eaque, dicta.',
+  name = 'John Doe',
+  date = '2023-01-01',
+  message = 'Bla Bla',
 }) => {
+
   const [like, setLike] = useState(false);
   const [highFive, setHighFive] = useState(false);
+  
   return (
     <IonCard>
       <IonCardHeader>

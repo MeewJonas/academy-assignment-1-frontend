@@ -1,9 +1,9 @@
-import { IonButton, IonButtons, IonHeader, IonItem, IonMenuButton, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButtons, IonHeader, IonMenuButton, IonTitle, IonToolbar } from '@ionic/react';
 import React from 'react';
 
-type MenuToolbarProps = { title: string; post: boolean };
+type MenuToolbarProps = { title: string };
 
-const MenuToolBar: React.FC<MenuToolbarProps> = ({ title = '', post = false }) => {
+const MenuToolBar: React.FC<MenuToolbarProps> = ({ title = '' }) => {
   return (
     <IonHeader>
       <IonToolbar color={'dark'}>
@@ -12,14 +12,6 @@ const MenuToolBar: React.FC<MenuToolbarProps> = ({ title = '', post = false }) =
         </IonButtons>
         <IonTitle>{title}</IonTitle>
       </IonToolbar>
-      {post && (
-        <IonItem className="border-solid border-4" lines='none'>
-          <IonTextarea  placeholder="Skriv nyt opslag"></IonTextarea>
-          <IonButton className='my-auto' slot="end" size="default">
-            Send
-          </IonButton>
-        </IonItem>
-      )}
     </IonHeader>
   );
 };

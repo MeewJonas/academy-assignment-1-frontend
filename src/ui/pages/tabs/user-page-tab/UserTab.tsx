@@ -21,11 +21,7 @@ const UserTab: React.FC = () => {
     if (lastName === undefined || lastName === null) return;
     if (age === undefined || age === null) return;
 
-    const { data, error } = await supabase.from('profile').update({ first_name: firstName, last_name: lastName, age: age }).eq('id', authUser?.id).select();
-
-    if (error) {
-      console.log(error);
-    }
+    const { data } = await supabase.from('profile').update({ first_name: firstName, last_name: lastName, age: age }).eq('id', authUser?.id).select();
 
     if (data) {
       router.push('/home');
@@ -34,7 +30,7 @@ const UserTab: React.FC = () => {
 
   return (
     <>
-      <MenuToolBar title="User" post={false} />
+      <MenuToolBar title="User" />
       <IonContent color={'white-background'}>
         <IonGrid>
           <IonRow>
