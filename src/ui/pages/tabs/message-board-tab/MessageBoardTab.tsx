@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IonButton, IonContent, IonHeader, IonItem, IonTextarea } from '@ionic/react';
 import { useAuthUserStore } from 'store/user';
 import { supabase } from 'apis/supabaseClient';
@@ -18,21 +18,30 @@ type Post = {
 const MessageBoardTab: React.FC = () => {
   const authUser = useAuthUserStore((state) => state.authUser);
   const [newPost, setNewPost] = useState<string>('');
-  const [posts, setPosts] = useState<Post[]>([
-    { id: '0', user: 'Michael Jordan', date: 'Today', message: 'Test test test?' },
-    { id: '1', user: 'Charles Barkley', date: 'Today', message: 'Test test test?' },
-    { id: '2', user: 'Scottie Pippen', date: 'Today', message: 'Test test test' },
-  ]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      //TODO - add range to select like this:   .range(0,9)
+      const { data } = await supabase.from('post').select('*, profile(first_name, last_name)').order('created', { ascending: false });
+      if (data === null) return;
+      setPosts(data.map((p) => ({ id: p.id, user: p.profile.first_name + ' ' + p.profile.last_name, date: p.created, message: p.message })));
+    };
 
-  
+    fetchPosts();
+  }, []);
+
   const handleSend = async () => {
-    if(newPost === '') return;
+    if (newPost === '') return;
     const { data } = await supabase.from('post').insert({ message: newPost, profile_fk: authUser?.id }).select('*, profile(first_name, last_name)');
     //const { data } = await supabase.from('post').select('*').eq('id', authUser?.id).single();
-    
-    if(data === null) return;
-    setPosts([...posts, { id: data[0].id, user: data[0].profile.first_name + ' ' + data[0].profile.last_name, date: data[0].created, message: data[0].message }]);
+
+    if (data === null) return;
+    setPosts([
+      { id: data[0].id, user: data[0].profile.first_name + ' ' + data[0].profile.last_name, date: data[0].created, message: data[0].message },
+      ...posts,
+    ]);
+    setNewPost('');
   };
 
   return (
