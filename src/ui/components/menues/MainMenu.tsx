@@ -39,7 +39,7 @@ const MainMenu = () => {
               );
             })}
             <IonItem onClick={() => setIsOpen(true)}>
-              <IonLabel>Modular Test</IonLabel>
+              <IonLabel>Modale Test</IonLabel>
             </IonItem>
             <IonItem onClick={handleLogOut}>
               <IonLabel>Log ud</IonLabel>

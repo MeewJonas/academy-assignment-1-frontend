@@ -26,14 +26,14 @@ const MessageBoardTab: React.FC = () => {
       //TODO - add range to select like this:   .range(0,9)
       const { data } = await supabase
         .from('post')
-        .select('*, profile_fk(first_name, last_name), post_likes_junction(profile_fk), post_highfive_junction(profile_fk)')
+        .select('*, profile_fk(id, first_name, last_name), post_likes_junction(profile_fk), post_highfive_junction(profile_fk)')
         .order('created', { ascending: false });
       if (data === null) return;
       setPosts(
         data.map((p) => ({
           id: p.id,
           user: p.profile_fk.first_name + ' ' + p.profile_fk.last_name,
-          userId: p.profile_fk,
+          userId: p.profile_fk.id,
           date: p.created,
           message: p.message,
           likes: p.post_likes_junction,
@@ -47,18 +47,21 @@ const MessageBoardTab: React.FC = () => {
 
   const handleSend = async () => {
     if (newPost === '') return;
-    const { data } = await supabase.from('post').insert({ message: newPost, profile_fk: authUser?.id }).select('*, profile(first_name, last_name)');
+    const { data } = await supabase
+      .from('post')
+      .insert({ message: newPost, profile_fk: authUser?.id })
+      .select('*, profile_fk(id, first_name, last_name), post_likes_junction(profile_fk), post_highfive_junction(profile_fk)');
 
     if (data === null) return;
     setPosts([
       {
         id: data[0].id,
-        user: data[0].profile.first_name + ' ' + data[0].profile.last_name,
-        userId: data[0].profile_fk,
+        user: data[0].profile_fk.first_name + ' ' + data[0].profile_fk.last_name,
+        userId: data[0].profile_fk.id,
         date: data[0].created,
         message: data[0].message,
-        likes: data[0].likes,
-        highfives: data[0].highfives,
+        likes: data[0].post_likes_junction,
+        highfives: data[0].post_highfive_junction,
       },
       ...posts,
     ]);
@@ -66,8 +69,8 @@ const MessageBoardTab: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
-    const { data } = await supabase.from('post').delete().match({ id: id });
-    if (data === null) return;
+    await supabase.from('post').delete().match({ id: id });
+    
     setPosts(posts.filter((p) => p.id !== id));
   };
 
