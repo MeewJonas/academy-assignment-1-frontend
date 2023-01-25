@@ -22,7 +22,7 @@ const CalendarTab: React.FC = () => {
 
   return (
     <>
-      <MenuToolBar title="User" />
+      <MenuToolBar title="Calendar" />
 
       <IonContent color={'white-background'}>
         <Center>
@@ -62,7 +62,7 @@ const CalendarTab: React.FC = () => {
                 }
                 return (
                   <div style={{ padding: 8 }}>
-                    <Typography.Title level={4}>Custom header</Typography.Title>
+                    <Typography.Title level={4}>Ant Design Calendar</Typography.Title>
                     <Row gutter={8}>
                       <Col>
                         <Radio.Group size="small" onChange={(e) => onTypeChange(e.target.value)} value={type}>
