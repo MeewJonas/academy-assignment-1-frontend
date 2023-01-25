@@ -13,11 +13,12 @@ type PostCardProps = {
     date: string;
     message: string;
     likes: Array<{ profile_fk: string }>;
+    highfives: Array<{ profile_fk: string }>;
   };
   onDelete: (id: string) => void;
 };
 
-const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, message, likes }, onDelete }) => {
+const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, message, likes, highfives }, onDelete }) => {
   const authUser = useAuthUserStore((state) => state.authUser);
   const [like, setLike] = useState(false);
   const [highFive, setHighFive] = useState(false);
@@ -32,7 +33,17 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
         }
       });
     };
+    const checkHighFive = async () => {
+      if (highfives === null || authUser === null) return;
+      highfives.forEach((highFive) => {
+        if (highFive.profile_fk === authUser?.id) {
+          setHighFive(true);
+          return;
+        }
+      });
+    };
     checkLike();
+    checkHighFive();
   }, []);
 
   const handleLike = async () => {
@@ -42,6 +53,16 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
     } else {
       await supabase.from('post_likes_junction').delete().match({ post_fk: id, profile_fk: authUser?.id });
       setLike(!like);
+    }
+  };
+
+  const handleHighFive = async () => {
+    if (!highFive) {
+      await supabase.from('post_highfive_junction').insert([{ post_fk: id, profile_fk: authUser?.id }]);
+      setHighFive(!highFive);
+    } else {
+      await supabase.from('post_highfive_junction').delete().match({ post_fk: id, profile_fk: authUser?.id });
+      setHighFive(!highFive);
     }
   };
 
@@ -58,7 +79,7 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
       <IonButton onClick={handleLike} fill="clear">
         {!like ? <IonIcon icon={heartOutline} /> : <IonIcon className="fill-red-900" icon={heart} />}
       </IonButton>
-      <IonButton onClick={() => setHighFive(!highFive)} fill="clear">
+      <IonButton onClick={handleHighFive} fill="clear">
         {!highFive ? <IonIcon icon={handRightOutline} /> : <IonIcon className="fill-blue-900" icon={handRight} />}
       </IonButton>
       <IonButton fill="clear">

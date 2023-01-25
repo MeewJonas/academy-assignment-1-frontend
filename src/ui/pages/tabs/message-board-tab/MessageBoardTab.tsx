@@ -12,9 +12,8 @@ type Post = {
   userId: string;
   date: string;
   message: string;
-  likes: Array<{profile_fk: string}>;
-  //likedByUser: boolean;
-  //highFivedByUser: boolean;
+  likes: Array<{ profile_fk: string }>;
+  highfives: Array<{ profile_fk: string }>;
 };
 
 const MessageBoardTab: React.FC = () => {
@@ -25,10 +24,21 @@ const MessageBoardTab: React.FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       //TODO - add range to select like this:   .range(0,9)
-      const { data } = await supabase.from('post').select('*, profile_fk(first_name, last_name), post_likes_junction(profile_fk)').order('created', { ascending: false });
+      const { data } = await supabase
+        .from('post')
+        .select('*, profile_fk(first_name, last_name), post_likes_junction(profile_fk), post_highfive_junction(profile_fk)')
+        .order('created', { ascending: false });
       if (data === null) return;
       setPosts(
-        data.map((p) => ({ id: p.id, user: p.profile_fk.first_name + ' ' + p.profile_fk.last_name, userId: p.profile_fk, date: p.created, message: p.message, likes: p.post_likes_junction }))
+        data.map((p) => ({
+          id: p.id,
+          user: p.profile_fk.first_name + ' ' + p.profile_fk.last_name,
+          userId: p.profile_fk,
+          date: p.created,
+          message: p.message,
+          likes: p.post_likes_junction,
+          highfives: p.post_highfive_junction,
+        }))
       );
     };
 
@@ -48,6 +58,7 @@ const MessageBoardTab: React.FC = () => {
         date: data[0].created,
         message: data[0].message,
         likes: data[0].likes,
+        highfives: data[0].highfives,
       },
       ...posts,
     ]);
@@ -56,7 +67,7 @@ const MessageBoardTab: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     const { data } = await supabase.from('post').delete().match({ id: id });
-    if (data === null) return; 
+    if (data === null) return;
     setPosts(posts.filter((p) => p.id !== id));
   };
 
