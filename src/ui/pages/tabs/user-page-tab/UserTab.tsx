@@ -8,12 +8,9 @@ import MenuToolBar from 'ui/components/custom/MenuToolBar';
 const UserTab: React.FC = () => {
   const router = useIonRouter();
   const authUser = useAuthUserStore((state) => state.authUser);
-  const firstName = useProfileStore((state) => state.firstName);
-  const lastName = useProfileStore((state) => state.lastName);
-  const age = useProfileStore((state) => state.age);
-  const setFirstName = useProfileStore((state) => state.setFirstName);
-  const setLastName = useProfileStore((state) => state.setLastName);
-  const setAge = useProfileStore((state) => state.setAge);
+  const { firstName, lastName, age } = useProfileStore((state) => state);
+  const { setFirstName, setLastName, setAge } = useProfileStore((state) => state);
+  
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

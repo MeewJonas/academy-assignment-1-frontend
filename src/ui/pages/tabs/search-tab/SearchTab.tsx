@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { IonButton, IonContent, IonHeader, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonSearchbar, IonToolbar } from '@ionic/react';
 import { useProfileStore } from 'store/profile';
 const SearchTab: React.FC = () => {
   const { profiles, getAllUserProfiles } = useProfileStore((state) => state);
@@ -10,7 +10,6 @@ const SearchTab: React.FC = () => {
 
   useEffect(() => {
     fetchProfiles();
-    console.log('Fetching Profiles');
   }, []);
 
   return (
