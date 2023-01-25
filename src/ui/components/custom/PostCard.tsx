@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon } from '@ionic/react';
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonText } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { heartOutline, handRightOutline, chatboxEllipsesOutline, closeOutline } from 'ionicons/icons';
 import { heart, handRight } from 'ionicons/icons';
@@ -22,6 +22,8 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
   const authUser = useAuthUserStore((state) => state.authUser);
   const [like, setLike] = useState(false);
   const [highFive, setHighFive] = useState(false);
+  const[amountLikes, setAmountLikes] = useState(likes.length);
+  const[amountHighFives, setAmountHighFives] = useState(highfives.length);
 
   useEffect(() => {
     const checkLike = async () => {
@@ -50,9 +52,11 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
     if (!like) {
       await supabase.from('post_likes_junction').insert([{ post_fk: id, profile_fk: authUser?.id }]);
       setLike(!like);
+      setAmountLikes(amountLikes + 1);
     } else {
       await supabase.from('post_likes_junction').delete().match({ post_fk: id, profile_fk: authUser?.id });
       setLike(!like);
+      setAmountLikes(amountLikes - 1);
     }
   };
 
@@ -60,9 +64,11 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
     if (!highFive) {
       await supabase.from('post_highfive_junction').insert([{ post_fk: id, profile_fk: authUser?.id }]);
       setHighFive(!highFive);
+      setAmountHighFives(amountHighFives + 1);
     } else {
       await supabase.from('post_highfive_junction').delete().match({ post_fk: id, profile_fk: authUser?.id });
       setHighFive(!highFive);
+      setAmountHighFives(amountHighFives - 1);
     }
   };
 
@@ -79,9 +85,11 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
       <IonButton onClick={handleLike} fill="clear">
         {!like ? <IonIcon icon={heartOutline} /> : <IonIcon className="fill-red-900" icon={heart} />}
       </IonButton>
+      <IonText>{amountLikes}</IonText>
       <IonButton onClick={handleHighFive} fill="clear">
         {!highFive ? <IonIcon icon={handRightOutline} /> : <IonIcon className="fill-blue-900" icon={handRight} />}
       </IonButton>
+      <IonText>{amountHighFives}</IonText>
       <IonButton fill="clear">
         <IonIcon icon={chatboxEllipsesOutline} />
       </IonButton>
