@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar } from '@ionic/react';
+import {  IonContent } from '@ionic/react';
 import MenuToolBar from 'ui/components/custom/MenuToolBar';
 
 const DirectMessageTab: React.FC = () => (

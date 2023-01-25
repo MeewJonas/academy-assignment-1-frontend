@@ -28,11 +28,12 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const { data: profile } = await supabase.from('profile').select('*').eq('id', authUser?.id).single();
+      if(profile === null) return;
       if (profile?.first_name === '') {
-        setProfile(profile?.first_name, profile?.last_name, profile?.age);
+        setProfile(profile.first_name, profile.last_name, profile.age);
         router.push('/onboard');
       } else {
-        setProfile(profile!.first_name, profile!.last_name, profile!.age);
+        setProfile(profile.first_name, profile.last_name, profile.age);
       }
     };
     if (!userProfile) {
@@ -76,7 +77,6 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
-// home, search, my page, messages, messageBoard
 const pages = [
   {
     name: 'home',

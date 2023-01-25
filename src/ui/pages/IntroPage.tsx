@@ -1,4 +1,4 @@
-import { IonPage, IonContent, useIonAlert, useIonRouter } from '@ionic/react';
+import { IonPage, IonContent } from '@ionic/react';
 import IntroComponent from 'ui/components/ui-library/intro-component/IntroComponent';
 
 const IntroPage: React.FC = () => {
