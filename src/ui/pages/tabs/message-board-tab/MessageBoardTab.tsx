@@ -38,6 +38,7 @@ const MessageBoardTab: React.FC = () => {
           message: p.message,
           likes: p.post_likes_junction,
           highfives: p.post_highfive_junction,
+          
         }))
       );
     };

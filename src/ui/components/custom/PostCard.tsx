@@ -50,7 +50,7 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
 
   const handleLike = async () => {
     if (!like) {
-      await supabase.from('post_likes_junction').insert([{ post_fk: id, profile_fk: authUser?.id }]);
+      await supabase.from('post_likes_junction').insert([{ post_fk: id, profile_fk: String(authUser?.id) }]);
       setLike(!like);
       setAmountLikes(amountLikes + 1);
     } else {
@@ -62,7 +62,7 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
 
   const handleHighFive = async () => {
     if (!highFive) {
-      await supabase.from('post_highfive_junction').insert([{ post_fk: id, profile_fk: authUser?.id }]);
+      await supabase.from('post_highfive_junction').insert([{ post_fk: id, profile_fk: String(authUser?.id) }]);
       setHighFive(!highFive);
       setAmountHighFives(amountHighFives + 1);
     } else {
