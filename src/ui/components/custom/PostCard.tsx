@@ -12,7 +12,7 @@ type PostCardProps = {
     userId: string;
     date: string;
     message: string;
-    likes: [profile_id: string];
+    likes: Array<{ profile_fk: string }>;
   };
   onDelete: (id: string) => void;
 };
@@ -22,13 +22,25 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
   const [like, setLike] = useState(false);
   const [highFive, setHighFive] = useState(false);
 
+  useEffect(() => {
+    const checkLike = async () => {
+      if (likes === null || authUser === null) return;
+      likes.forEach((like) => {
+        if (like.profile_fk === authUser?.id) {
+          setLike(true);
+          return;
+        }
+      });
+    };
+    checkLike();
+  }, []);
+
   const handleLike = async () => {
     if (!like) {
-      const { data, error } = await supabase.from('post_likes_junction').insert([{ post_fk: id, profile_fk: authUser?.id }]);
-
+      await supabase.from('post_likes_junction').insert([{ post_fk: id, profile_fk: authUser?.id }]);
       setLike(!like);
     } else {
-      const { data, error } = await supabase.from('post_likes_junction').delete().match({ post_fk: id, profile_fk: authUser?.id });
+      await supabase.from('post_likes_junction').delete().match({ post_fk: id, profile_fk: authUser?.id });
       setLike(!like);
     }
   };
@@ -42,10 +54,6 @@ const PostCard: React.FC<PostCardProps> = ({ post: { id, user, userId, date, mes
       </IonCardHeader>
 
       <IonCardContent>{message}</IonCardContent>
-
-      <IonButton onClick={() => console.log(likes)} fill="clear">
-        test
-      </IonButton>
 
       <IonButton onClick={handleLike} fill="clear">
         {!like ? <IonIcon icon={heartOutline} /> : <IonIcon className="fill-red-900" icon={heart} />}

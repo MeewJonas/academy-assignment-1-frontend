@@ -12,7 +12,7 @@ type Post = {
   userId: string;
   date: string;
   message: string;
-  likes: [ profile_id: string]
+  likes: Array<{profile_fk: string}>;
   //likedByUser: boolean;
   //highFivedByUser: boolean;
 };
@@ -30,7 +30,6 @@ const MessageBoardTab: React.FC = () => {
       setPosts(
         data.map((p) => ({ id: p.id, user: p.profile_fk.first_name + ' ' + p.profile_fk.last_name, userId: p.profile_fk, date: p.created, message: p.message, likes: p.post_likes_junction }))
       );
-      console.log(data);
     };
 
     fetchPosts();
@@ -72,9 +71,7 @@ const MessageBoardTab: React.FC = () => {
           </IonButton>
         </IonItem>
       </IonHeader>
-
       <IonContent id="message-board-content" color={'white-background'}>
-        <IonButton onClick={() => console.log(posts)} className="my-auto" size="default">test</IonButton>
         <div className="px-5 pb-40">
           {posts?.map((p, i) => {
             return <PostCard key={i} post={p} onDelete={handleDelete} />;
