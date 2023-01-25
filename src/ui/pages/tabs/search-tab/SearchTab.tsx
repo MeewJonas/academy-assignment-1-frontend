@@ -1,18 +1,39 @@
-import React from 'react';
-import { IonContent, IonGrid, IonHeader, IonRow, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
+import { useEffect } from 'react';
+import { IonButton, IonContent, IonHeader, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
+import { useProfileStore } from 'store/profile';
+const SearchTab: React.FC = () => {
+  const { profiles, getAllUserProfiles } = useProfileStore((state) => state);
 
-const SearchTab: React.FC = () => (
-  <>
-    <IonHeader>
-      <IonToolbar color={'dark'}>
-        <IonSearchbar className="mt-5" placeholder="Søg"></IonSearchbar>
-      </IonToolbar>
-    </IonHeader>
+  const fetchProfiles = async () => {
+    getAllUserProfiles();
+  };
 
-    <IonContent color={'white-background'}>
-      <IonTitle>Search</IonTitle>
-    </IonContent>
-  </>
-);
+  useEffect(() => {
+    fetchProfiles();
+    console.log('Fetching Profiles');
+  }, []);
+
+  return (
+    <>
+      <IonHeader>
+        <IonToolbar color={'dark'}>
+          <IonSearchbar className="mt-5" placeholder="Søg"></IonSearchbar>
+        </IonToolbar>
+      </IonHeader>
+
+      <IonContent color={'white-background'}>
+        <div className="px-5 pb-40">
+          {profiles?.map((p) => (
+            <div key={p.id}>
+              <p>
+                {p.first_name} {p.last_name}
+              </p>
+            </div>
+          ))}
+        </div>
+      </IonContent>
+    </>
+  );
+};
 
 export default SearchTab;
