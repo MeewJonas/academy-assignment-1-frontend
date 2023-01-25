@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router';
 import { IonReactRouter } from '@ionic/react-router';
 import { IonTabBar, IonTabButton, IonIcon, IonTabs, IonRouterOutlet, IonContent, IonPage, useIonRouter, IonLabel } from '@ionic/react';
-import { personOutline, mailOutline, searchOutline, homeOutline } from 'ionicons/icons';
+import { personOutline, mailOutline, searchOutline, homeOutline, calendarNumberOutline } from 'ionicons/icons';
 
 import DirectMessageTab from './tabs/direct-message-tab/DirectMessageTab';
 import MessageBoardTab from './tabs/message-board-tab/MessageBoardTab';
 import SearchTab from './tabs/search-tab/SearchTab';
 import UserTab from './tabs/user-page-tab/UserTab';
+import CalendarTab from './tabs/calendar-tab/CalendarTab';
 
 import { useAuthUserStore } from 'store/user';
 import { useProfileStore } from 'store/profile';
@@ -44,7 +45,7 @@ const HomePage: React.FC = () => {
   return (
     <>
       <MainMenu />
-      <IonPage id="main-content">
+      <IonPage id="main-content" >
         <IonContent className="ion-padding">
           <IonReactRouter>
             <IonTabs>
@@ -90,6 +91,13 @@ const pages = [
     icon: mailOutline,
     path: '/message',
     component: DirectMessageTab,
+    redirect: false,
+  },
+  {
+    name: 'calendar',
+    icon: calendarNumberOutline,
+    path: '/calendar',
+    component: CalendarTab,
     redirect: false,
   },
   {
