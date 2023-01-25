@@ -12,6 +12,7 @@ type Post = {
   userId: string;
   date: string;
   message: string;
+  likes: [ profile_id: string]
   //likedByUser: boolean;
   //highFivedByUser: boolean;
 };
@@ -24,11 +25,12 @@ const MessageBoardTab: React.FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       //TODO - add range to select like this:   .range(0,9)
-      const { data } = await supabase.from('post').select('*, profile(first_name, last_name)').order('created', { ascending: false });
+      const { data } = await supabase.from('post').select('*, profile_fk(first_name, last_name), post_likes_junction(profile_fk)').order('created', { ascending: false });
       if (data === null) return;
       setPosts(
-        data.map((p) => ({ id: p.id, user: p.profile.first_name + ' ' + p.profile.last_name, userId: p.profile_fk, date: p.created, message: p.message }))
+        data.map((p) => ({ id: p.id, user: p.profile_fk.first_name + ' ' + p.profile_fk.last_name, userId: p.profile_fk, date: p.created, message: p.message, likes: p.post_likes_junction }))
       );
+      console.log(data);
     };
 
     fetchPosts();
@@ -46,6 +48,7 @@ const MessageBoardTab: React.FC = () => {
         userId: data[0].profile_fk,
         date: data[0].created,
         message: data[0].message,
+        likes: data[0].likes,
       },
       ...posts,
     ]);
@@ -71,6 +74,7 @@ const MessageBoardTab: React.FC = () => {
       </IonHeader>
 
       <IonContent id="message-board-content" color={'white-background'}>
+        <IonButton onClick={() => console.log(posts)} className="my-auto" size="default">test</IonButton>
         <div className="px-5 pb-40">
           {posts?.map((p, i) => {
             return <PostCard key={i} post={p} onDelete={handleDelete} />;
