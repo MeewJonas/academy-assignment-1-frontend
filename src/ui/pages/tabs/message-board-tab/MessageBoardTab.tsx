@@ -88,8 +88,8 @@ const MessageBoardTab: React.FC = () => {
       </IonHeader>
       <IonContent id="message-board-content" color={'white-background'}>
         <div className="px-5 pb-40">
-          {posts?.map((p, i) => {
-            return <PostCard key={i} post={p} onDelete={handleDelete} />;
+          {posts?.map((p) => {
+            return <PostCard key={p.id} post={p} onDelete={handleDelete} />;
           })}
         </div>
       </IonContent>
