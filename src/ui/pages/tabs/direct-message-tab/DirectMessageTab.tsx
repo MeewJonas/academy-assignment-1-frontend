@@ -33,7 +33,7 @@ const DirectMessageTab: React.FC = () => {
       <IonContent color={'white-background'}>
         {messages.map((m, i) => (
           <IonItem key={i} className="border-solid border-4" lines="none">
-            {m.sender === 'The Edge' ? <h1 className="mr-1 text-blue-800">{m.sender}:</h1> : <h1 className="mr-1 text-red-800">{m.sender}:</h1>}
+            {m.sender === 'The Edge' ? <h2 className="mr-1 text-blue-800">{m.sender}:</h2> : <h2 className="mr-1 text-red-800">{m.sender}:</h2>}
             <p>{m.message}</p>
           </IonItem>
         ))}
