@@ -5,12 +5,10 @@ import { Database } from 'types/database.types';
 type Profile = Database['public']['Tables']['profile']['Row'];
 
 interface ProfileState {
-  //userProfile: Profile | null;
   firstName: string | null;
   lastName: string | null;
   age: number | null;
   profiles: Profile[] | null;
-  //setUserProfile: (userProfile: Profile) => void;
   setFirstName: (firstName: string) => void;
   setLastName: (lastName: string) => void;
   setAge: (age: number) => void;
@@ -24,7 +22,6 @@ export const useProfileStore = create<ProfileState>((set) => ({
   lastName: null,
   age: null,
   profiles: [],
-  //setUserProfile: (userProfile) => set({ userProfile  }),
   setFirstName: (firstName) => set({ firstName }),
   setLastName: (lastName) => set({ lastName }),
   setAge: (age) => set({ age }),
