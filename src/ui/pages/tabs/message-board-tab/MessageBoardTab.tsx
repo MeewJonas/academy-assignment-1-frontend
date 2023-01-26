@@ -38,7 +38,6 @@ const MessageBoardTab: React.FC = () => {
           message: p.message,
           likes: p.post_likes_junction,
           highfives: p.post_highfive_junction,
-          
         }))
       );
     };
@@ -71,7 +70,7 @@ const MessageBoardTab: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     await supabase.from('post').delete().match({ id: id });
-    
+
     setPosts(posts.filter((p) => p.id !== id));
   };
 
@@ -80,7 +79,7 @@ const MessageBoardTab: React.FC = () => {
       <MenuToolBar title="Forum" />
       <IonHeader>
         <IonItem className="border-solid border-4" lines="none">
-          <IonTextarea onIonChange={(e: any) => setNewPost(e.detail.value)} placeholder="Skriv nyt opslag" value={newPost}></IonTextarea>
+          <IonTextarea onIonChange={(e: any) => setNewPost(e.detail.value)} placeholder="Say something" value={newPost}></IonTextarea>
           <IonButton onClick={handleSend} className="my-auto" slot="end" size="default">
             Send
           </IonButton>

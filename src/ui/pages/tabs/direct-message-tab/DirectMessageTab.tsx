@@ -24,7 +24,7 @@ const DirectMessageTab: React.FC = () => {
       <MenuToolBar title="Direct Message" />
       <IonHeader>
         <IonItem className="border-solid border-4" lines="none">
-          <IonTextarea onIonChange={(e: any) => setMessage(e.detail.value)} value={message} placeholder="Skriv nyt opslag"></IonTextarea>
+          <IonTextarea onIonChange={(e: any) => setMessage(e.detail.value)} value={message} placeholder="Say something"></IonTextarea>
           <IonButton onClick={handleSend} className="my-auto" slot="end" size="default">
             Send
           </IonButton>

@@ -16,7 +16,7 @@ const SearchTab: React.FC = () => {
     <>
       <IonHeader>
         <IonToolbar color={'dark'}>
-          <IonSearchbar className="mt-5" placeholder="Søg"></IonSearchbar>
+          <IonSearchbar className="mt-5" placeholder="Search"></IonSearchbar>
         </IonToolbar>
       </IonHeader>
 
