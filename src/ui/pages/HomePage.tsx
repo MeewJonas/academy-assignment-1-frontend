@@ -29,23 +29,25 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const { data: profile } = await supabase.from('profile').select('*').eq('id', authUser?.id).single();
-      if(profile === null) return;
-      if (profile?.first_name === '') {
-        setProfile(profile.first_name, profile.last_name, profile.age);
-        router.push('/onboard');
-      } else {
-        setProfile(profile.first_name, profile.last_name, profile.age);
-      }
+      if (profile === null) return;
+
+      setProfile(profile.first_name, profile.last_name, profile.age);
     };
     if (!userProfile) {
       fetchProfile();
     }
   }, []);
 
+  useEffect(() => {
+    if (userProfile === '') {
+      router.push('/onboard');
+    }
+  }, [userProfile]);
+
   return (
     <>
       <MainMenu />
-      <IonPage id="main-content" >
+      <IonPage id="main-content">
         <IonContent className="ion-padding">
           <IonReactRouter>
             <IonTabs>
